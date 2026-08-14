@@ -1,0 +1,6 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="SauceDemo Suite">
+  <test name="Login and Checkout">
+    <classes><class name="com.qa.tests.SauceDemoCheckoutTest"/></classes>
+  </test>
+</suite>
