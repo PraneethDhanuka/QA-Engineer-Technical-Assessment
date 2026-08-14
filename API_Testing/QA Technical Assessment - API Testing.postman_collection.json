@@ -1,0 +1,245 @@
+{
+  "info": {
+    "_postman_id": "78436383-c33e-45d3-bfe3-7c34cb2047ed",
+    "name": "QA Technical Assessment - API Testing",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "57344262",
+    "_collection_link": "https://go.postman.co/collection/57344262-78436383-c33e-45d3-bfe3-7c34cb2047ed?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "TC01 - Successful Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Token is returned\", function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.token).to.exist;",
+              "});",
+              "",
+              "pm.test(\"Response time is less than 1000ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"password123\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://restful-booker.herokuapp.com/auth",
+          "protocol": "https",
+          "host": [
+            "restful-booker",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "auth"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "TC02 - Invalid Credentials",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Bad credentials message is returned\", function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.reason).to.eql(\"Bad credentials\");",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"wronguser\",\n  \"password\": \"wrongpass\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://restful-booker.herokuapp.com/auth",
+          "protocol": "https",
+          "host": [
+            "restful-booker",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "auth"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "TC03 – Missing Username",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Invalid credentials response is returned\", function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.reason).to.exist;",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"\",\n  \"password\": \"password123\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://restful-booker.herokuapp.com/auth",
+          "protocol": "https",
+          "host": [
+            "restful-booker",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "auth"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "TC04 – Update Booking.",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Booking firstname is updated\", function () {\r",
+              "    const jsonData = pm.response.json();\r",
+              "    pm.expect(jsonData.firstname).to.eql(\"Praneeth\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Booking lastname is updated\", function () {\r",
+              "    const jsonData = pm.response.json();\r",
+              "    pm.expect(jsonData.lastname).to.eql(\"Dhanuka\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Cookie",
+            "value": "token=afe3d170b76635e",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"firstname\": \"Praneeth\",\r\n    \"lastname\": \"Dhanuka\",\r\n    \"totalprice\": 200,\r\n    \"depositpaid\": true,\r\n    \"bookingdates\": {\r\n        \"checkin\": \"2026-08-15\",\r\n        \"checkout\": \"2026-08-20\"\r\n    },\r\n    \"additionalneeds\": \"Breakfast\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://restful-booker.herokuapp.com/booking/1",
+          "protocol": "https",
+          "host": [
+            "restful-booker",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "booking",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
